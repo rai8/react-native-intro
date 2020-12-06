@@ -1,49 +1,30 @@
 import React, { useState } from 'react'
-import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-
+import { StyleSheet, Text, View, FlatList } from 'react-native'
+import Header from './components/Header'
+import TodoItem from './components/TodoItem'
 export default function App() {
-  const [people, setPeople] = useState([
-    { name: 'shaun', id: '1' },
-    { name: 'yoshi', id: '2' },
-    { name: 'mario', id: '3' },
-    { name: 'luigi', id: '4' },
-    { name: 'peach', id: '5' },
-    { name: 'todd', id: '6' },
-    { name: 'bowser', id: '7' },
-    { name: 'peach', id: '8' },
-    { name: 'peach', id: '9' },
+  const [todos, setTodos] = useState([
+    { text: 'Buy Coffee', key: '1' },
+    { text: 'Feed the cat', key: '2' },
+    { text: 'Learn Go language', key: '3' },
   ])
-  const pressHandler = id => {
-    console.log(id)
-    setPeople(prevPeople => {
-      return prevPeople.filter(person => person.id != id)
+
+  //function that will handle our delete on the TodoItem component
+  const pressHandler = key => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.key != key)
     })
   }
-
   return (
     <View style={styles.container}>
-      {/*  Using the flatlist component */}
-
-      <FlatList
-        numColumns={2}
-        keyExtractor={item => item.id}
-        data={people}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => pressHandler(item.id)}>
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-      {/* using the scroll view */}
-      {/* <ScrollView>
-        {people.map(item => {
-          return (
-            <View key={item.key}>
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-          )
-        })}
-      </ScrollView> */}
+      {/* Setting up the header */}
+      <Header />
+      <View style={styles.content}>
+        {/* Setting up or todo form */}
+        <View style={styles.list}>
+          <FlatList data={todos} renderItem={({ item }) => <TodoItem item={item} pressHandler={pressHandler} />} />
+        </View>
+      </View>
     </View>
   )
 }
@@ -52,16 +33,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    // alignItems: 'center',
-    //justifyContent: 'center',
   },
-  item: {
-    backgroundColor: 'pink',
-    padding: 20,
+  content: {
+    padding: 40,
+  },
+  lis: {
     marginTop: 20,
-    fontSize: 22,
-    marginHorizontal: 10,
   },
 })
