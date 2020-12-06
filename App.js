@@ -1,31 +1,30 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 
 export default function App() {
-  const [name, setName] = useState('shaun')
-  const [age, setAge] = useState('25')
+  const [people, setPeople] = useState([
+    { name: 'shaun', key: '1' },
+    { name: 'yoshi', key: '2' },
+    { name: 'mario', key: '3' },
+    { name: 'luigi', key: '4' },
+    { name: 'peach', key: '5' },
+    { name: 'todd', key: '6' },
+    { name: 'bowser', key: '7' },
+    { name: 'peach', key: '8' },
+    { name: 'peach', key: '9' },
+  ])
 
   return (
     <View style={styles.container}>
-      <Text>Enter your name : </Text>
-      <TextInput
-        multiline //add more than a single line
-        style={styles.input}
-        placeholder='e.g John Doe'
-        placeholderTextColor='#777'
-        onChangeText={val => setName(val)}
-      />
-      <Text>Enter your Age : </Text>
-      <TextInput
-        keyboardType='numeric'
-        style={styles.input}
-        placeholder='e.g 43'
-        placeholderTextColor='#777'
-        onChangeText={val => setAge(val)}
-      />
-      <Text>
-        name: {name} age: {age}{' '}
-      </Text>
+      <ScrollView>
+        {people.map(item => {
+          return (
+            <View key={item.key}>
+              <Text style={styles.item}>{item.name}</Text>
+            </View>
+          )
+        })}
+      </ScrollView>
     </View>
   )
 }
@@ -34,15 +33,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    // alignItems: 'center',
+    //justifyContent: 'center',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#777',
-    margin: 10,
-    width: 200,
-    padding: 8,
-    borderRadius: 4,
+  item: {
+    backgroundColor: 'pink',
+    padding: 20,
+    marginTop: 20,
+    fontSize: 22,
   },
 })
