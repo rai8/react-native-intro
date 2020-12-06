@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { Platform, StatusBar } from 'react-native'
 import AddTodo from './components/AddTodo'
 import Header from './components/Header'
 import TodoItem from './components/TodoItem'
@@ -30,17 +31,23 @@ export default function App() {
     }
   }
   return (
-    <View style={styles.container}>
-      {/* Setting up the header */}
-      <Header />
-      <View style={styles.content}>
-        {/* Setting up or todo form */}
-        <AddTodo submitHandler={submitHandler} />
-        <View style={styles.list}>
-          <FlatList data={todos} renderItem={({ item }) => <TodoItem item={item} pressHandler={pressHandler} />} />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+      }}
+    >
+      <View style={styles.container} style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+        {/* Setting up the header */}
+        <Header />
+        <View style={styles.content}>
+          {/* Setting up or todo form */}
+          <AddTodo submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList data={todos} renderItem={({ item }) => <TodoItem item={item} pressHandler={pressHandler} />} />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -50,9 +57,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 40,
+    padding: 20,
   },
-  lis: {
+  list: {
     marginTop: 20,
   },
 })
