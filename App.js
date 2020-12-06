@@ -36,7 +36,9 @@ export default function App() {
         Keyboard.dismiss()
       }}
     >
-      <View style={styles.container} style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+      <View
+        style={styles.container} /* style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }} */
+      >
         {/* Setting up the header */}
         <Header />
         <View style={styles.content}>
@@ -57,9 +59,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 20,
+    padding: 40,
+
+    flex: 1,
   },
   list: {
+    flex: 1,
     marginTop: 20,
   },
 })
