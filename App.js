@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 export default function App() {
   const [people, setPeople] = useState([
@@ -13,15 +13,26 @@ export default function App() {
     { name: 'peach', id: '8' },
     { name: 'peach', id: '9' },
   ])
+  const pressHandler = id => {
+    console.log(id)
+    setPeople(prevPeople => {
+      return prevPeople.filter(person => person.id != id)
+    })
+  }
 
   return (
     <View style={styles.container}>
       {/*  Using the flatlist component */}
 
       <FlatList
-        data={people}
+        numColumns={2}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+        data={people}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => pressHandler(item.id)}>
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
       />
       {/* using the scroll view */}
       {/* <ScrollView>
@@ -51,5 +62,6 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     fontSize: 22,
+    marginHorizontal: 10,
   },
 })
